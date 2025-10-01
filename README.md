@@ -26,6 +26,8 @@ Terminal CSS is also available via [CDN](https://unpkg.com/terminal.css)
 <link rel="stylesheet" href="https://unpkg.com/terminal.css" />
 ```
 
+To apply all the styles, add the `terminal` class to your page's `<body>` tag.
+
 ## Themes
 
 To create your own theme just open the dev-tools and edit the CSS Variables. Copy and paste it to your website. Done!
