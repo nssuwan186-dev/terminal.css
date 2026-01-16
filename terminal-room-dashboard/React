@@ -1,0 +1,5 @@
+useEffect(() => {
+  fetch('http://localhost:4000/transactions')
+    .then(res => res.json())
+    .then(data => setTransactions(data));
+}, []);
