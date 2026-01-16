@@ -23,42 +23,51 @@ const [activeTab, setActiveTab] = useState('dashboard');
 const [isSidebarOpen, setSidebarOpen] = useState(true);
 const [showModal, setShowModal] = useState(null);
 const [selectedRoom, setSelectedRoom] = useState(null);
+const [loading, setLoading] = useState(true);
 
 // Filters
 const [roomFilter, setRoomFilter] = useState('ทั้งหมด');
 const [financeFilter, setFinanceFilter] = useState('ทั้งหมด');
 const [reportMonth, setReportMonth] = useState('มกราคม 2569');
 
-// --- Core Data States (M1-M7) ---
-const [rooms, setRooms] = useState([
-{ id: '101', type: 'รายวัน', status: 'ว่าง', price: 500, guest: '-', meterE: 1250, meterW: 450 },
-{ id: '102', type: 'รายเดือน', status: 'เช่าอยู่', price: 3500, guest: 'สมชาย ใจดี', phone: '081-234-5678', meterE: 2100, meterW: 880 },
-{ id: '201', type: 'รายวัน', status: 'จอง', price: 500, guest: 'วิภาดา', meterE: 3320, meterW: 1120 },
-{ id: 'H01', type: 'บ้านเช่า', status: 'เช่าอยู่', price: 12000, guest: 'สมศรี', meterE: 4500, meterW: 1500 }
-]);
-
-const [transactions, setTransactions] = useState([
-{ id: 'T001', date: '2025-01-12', room: '102', amount: 4200, type: 'รายรับ', desc: 'ค่าเช่า + ค่าน้ำไฟ', status: 'สำเร็จ' },
-{ id: 'T002', date: '2025-01-12', room: '-', amount: 1500, type: 'รายจ่าย', desc: 'ซื้อวัสดุทำความสะอาด', status: 'อนุมัติแล้ว' },
-{ id: 'T003', date: '2025-01-13', room: '101', amount: 500, type: 'รายรับ', desc: 'ค่าห้องพักรายวัน', status: 'สำเร็จ' },
-]);
-
-const [employees, setEmployees] = useState([
-{ id: 'EMP01', name: 'วิชัย รักงาน', role: 'แม่บ้าน', status: 'ปฏิบัติงาน' },
-{ id: 'EMP02', name: 'มานะ ขยัน', role: 'ช่างเทคนิค', status: 'พักร้อน' }
-]);
-
+// --- Core Data States ---
+const [rooms, setRooms] = useState([]);
+const [transactions, setTransactions] = useState([]);
+const [employees, setEmployees] = useState([]);
 const [maintenance, setMaintenance] = useState([
 { id: 'M001', date: '2025-01-10', room: '102', issue: 'ก๊อกน้ำรั่ว', priority: 'ต่ำ', status: 'รอดำเนินการ' },
 { id: 'M002', date: '2025-01-14', room: '201', issue: 'แอร์ไม่เย็น', priority: 'สูง', status: 'กำลังซ่อม' }
 ]);
-
 const [inventory, setInventory] = useState([
 { id: 'AST001', name: 'Smart TV 50"', category: 'เครื่องใช้ไฟฟ้า', room: '102', value: 15900, condition: 'ดีมาก' },
 { id: 'AST002', name: 'เครื่องทำน้ำอุ่น Panasonic', category: 'งานระบบ', room: '201', value: 3500, condition: 'ปกติ' },
-{ id: 'AST003', name: 'โซฟารับแขก 3 ที่นั่ง', category: 'เฟอร์นิเจอร์', room: 'H01', value: 8900, condition: 'ชำรุดเล็กน้อย' },
-{ id: 'AST004', name: 'ตู้เย็น 2 ประตู', category: 'เครื่องใช้ไฟฟ้า', room: '102', value: 12500, condition: 'ปกติ' },
 ]);
+
+// --- API Fetching ---
+const API_BASE = 'http://localhost:4000/api';
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const [roomsRes, transRes, empRes] = await Promise.all([
+        fetch(`${API_BASE}/rooms`),
+        fetch(`${API_BASE}/transactions`),
+        fetch(`${API_BASE}/employees`)
+      ]);
+
+      if (roomsRes.ok) setRooms(await roomsRes.json());
+      if (transRes.ok) setTransactions(await transRes.json());
+      if (empRes.ok) setEmployees(await empRes.json());
+    } catch (err) {
+      console.error("Failed to fetch data:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchData();
+}, []);
 
 // --- Actions ---
 const handleCheckIn = (e) => {

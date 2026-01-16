@@ -28,8 +28,16 @@ const pool = mysql.createPool(dbConfig);
 // 1. ข้อมูลห้องพัก (Rooms)
 app.get('/api/rooms', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM ห้องพัก ORDER BY หมายเลขห้อง');
-    res.json(rows);
+    const [rows] = await pool.query('SELECT หมายเลขห้อง as id, ประเภทห้อง as type, สถานะห้อง as status, ราคาต่อคืน as price FROM ห้องพัก ORDER BY หมายเลขห้อง');
+    // Map status to match frontend expectations if needed
+    const mappedRows = rows.map(r => ({
+      ...r,
+      status: r.status === 'มีผู้พัก' ? 'เช่าอยู่' : r.status,
+      guest: '-', // Data from joined table would go here
+      meterE: 0,
+      meterW: 0
+    }));
+    res.json(mappedRows);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
@@ -39,8 +47,15 @@ app.get('/api/rooms', async (req, res) => {
 // 2. ข้อมูลธุรกรรม (Transactions)
 app.get('/api/transactions', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM รายการบัญชี ORDER BY วันที่ทำรายการ DESC LIMIT 100');
-    res.json(rows);
+    const [rows] = await pool.query('SELECT รหัสรายการ as id, วันที่ทำรายการ as date, รายละเอียด as `desc`, ยอดรวม as amount FROM รายการบัญชี ORDER BY วันที่ทำรายการ DESC LIMIT 100');
+    const mappedRows = rows.map(r => ({
+      ...r,
+      type: r.amount >= 0 ? 'รายรับ' : 'รายจ่าย',
+      amount: Math.abs(r.amount),
+      room: '-',
+      status: 'สำเร็จ'
+    }));
+    res.json(mappedRows);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
@@ -50,8 +65,12 @@ app.get('/api/transactions', async (req, res) => {
 // 3. ข้อมูลพนักงาน (Employees)
 app.get('/api/employees', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM พนักงาน ORDER BY ชื่อ_นามสกุล');
-    res.json(rows);
+    const [rows] = await pool.query('SELECT รหัสพนักงานภายใน as id, ชื่อ_นามสกุล as name, ตำแหน่ง as role, สถานะ as status FROM พนักงาน ORDER BY ชื่อ_นามสกุล');
+    const mappedRows = rows.map(r => ({
+      ...r,
+      status: r.status === 'ทำงาน' ? 'ปฏิบัติงาน' : 'พักร้อน'
+    }));
+    res.json(mappedRows);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
