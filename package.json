@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "my-project",
   "version": "1.0.0",
   "description": "",
@@ -10,4 +11,45 @@
   "author": "",
   "license": "ISC",
   "type": "commonjs"
+=======
+  "name": "terminal.css",
+  "version": "0.7.5",
+  "description": "A modern and minimal CSS framework for terminal lovers.",
+  "main": "dist/terminal.min.css",
+  "directories": {
+    "doc": "docs"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "start": "node ./run.js --serve",
+    "build": "node ./run.js",
+    "lint": "stylelint lib/terminal.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gioni06/terminal.css.git"
+  },
+  "keywords": [
+    "CSS",
+    "Framework",
+    "Grid",
+    "Terminal",
+    "Style"
+  ],
+  "author": "Jonas Duri <https://jduri.xyz>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Gioni06/terminal.css/issues"
+  },
+  "homepage": "https://terminalcss.xyz",
+  "devDependencies": {
+    "stylelint": "^15.11.0",
+    "stylelint-config-standard": "^34.0.0"
+  },
+  "browserslist": [
+    "defaults"
+  ]
+>>>>>>> upstream/master
 }
