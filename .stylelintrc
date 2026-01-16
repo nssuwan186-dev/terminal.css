@@ -1,8 +1,0 @@
-{
-  "extends": "stylelint-config-standard",
-  "rules": {
-    "value-keyword-case": ["lower", {
-      "ignoreKeywords": ["Menlo", "Monaco", "Console", "Lucida", "Consolas", "Courier", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Vera"]
-    }]
-  }
-}

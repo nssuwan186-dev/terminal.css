@@ -1,51 +1,70 @@
-# Terminal CSS
+# Getting Started with Create React App
 
-Modern and minimal CSS framework for terminal lovers.
-Visit the website [terminalcss.xyz](https://terminalcss.xyz/)
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Project Goals
+## Available Scripts
 
-Terminal CSS has no overhead and is lightweight **(~3k gzip)**. 
-The source is written in **pure css** to be accessible for everybody and easy to contribute.
+In the project directory, you can run:
 
-## Markdown ❤️ Terminal CSS 
+### `npm start`
 
-It's perfect for your *personal website*, *blog*, or *side project*.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-## How to use
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-When using something like Webpack just install with `npm i terminal.css`.
+### `npm test`
 
-```js
-import 'terminal.css'
-```
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-Terminal CSS is also available via [CDN](https://unpkg.com/terminal.css)
+### `npm run build`
 
-```html
-<link rel="stylesheet" href="https://unpkg.com/terminal.css" />
-```
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-To apply all the styles, add the `terminal` class to your page's `<body>` tag.
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-## Themes
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-To create your own theme just open the dev-tools and edit the CSS Variables. Copy and paste it to your website. Done!
+### `npm run eject`
 
-## Development
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-- `npm install`   
-- `npm run start`
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-## Contributing
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-1.  Fork it!
-2.  Create your feature branch: `git checkout -b my-new-feature`
-3.  Commit your changes: `git commit -m 'Add some feature'`
-4.  Push to the branch: `git push origin my-new-feature`
-5.  Submit a pull request
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## License
-MIT © [Gioni06](https://github.com/Gioni06)
+## Learn More
 
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

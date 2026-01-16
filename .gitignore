@@ -1,8 +1,28 @@
-node_modules
-dist
-npm-debug.log
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# env
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+server/.env
+
+# logs
+*.log
+server/server.log
+
+# misc
 .DS_Store
-.vscode
-public
-/.idea/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

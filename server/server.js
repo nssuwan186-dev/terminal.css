@@ -1,0 +1,80 @@
+import express from "express";
+import mysql from "mysql2/promise";
+import cors from "cors";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// Database Connection
+const dbConfig = {
+  host: process.env.DB_HOST || 'gateway02.us-east-1.prod.aws.tidbcloud.com',
+  user: process.env.DB_USER || '3UEtScgPrGx6DTw.c8d1a5469bae',
+  password: process.env.DB_PASSWORD, 
+  database: process.env.DB_NAME || 'h667ndwT9e7Uvcqqw3D6DU',
+  ssl: { rejectUnauthorized: true },
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+};
+
+const pool = mysql.createPool(dbConfig);
+
+// --- API Endpoints (Thai DB) ---
+
+// 1. ข้อมูลห้องพัก (Rooms)
+app.get('/api/rooms', async (req, res) => {
+  try {
+    const [rows] = await pool.query('SELECT * FROM ห้องพัก ORDER BY หมายเลขห้อง');
+    res.json(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 2. ข้อมูลธุรกรรม (Transactions)
+app.get('/api/transactions', async (req, res) => {
+  try {
+    const [rows] = await pool.query('SELECT * FROM รายการบัญชี ORDER BY วันที่ทำรายการ DESC LIMIT 100');
+    res.json(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 3. ข้อมูลพนักงาน (Employees)
+app.get('/api/employees', async (req, res) => {
+  try {
+    const [rows] = await pool.query('SELECT * FROM พนักงาน ORDER BY ชื่อ_นามสกุล');
+    res.json(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 4. แดชบอร์ดสรุป (Dashboard Stats)
+app.get('/api/dashboard', async (req, res) => {
+  try {
+    const [income] = await pool.query("SELECT SUM(ยอดรวม) as total FROM รายการบัญชี WHERE ยอดรวม > 0");
+    const [expense] = await pool.query("SELECT SUM(ยอดรวม) as total FROM รายการบัญชี WHERE ยอดรวม < 0");
+    const [rooms] = await pool.query("SELECT COUNT(*) as total FROM ห้องพัก WHERE สถานะห้อง = 'ว่าง'");
+    
+    res.json({
+      income: income[0].total || 0,
+      expense: Math.abs(expense[0].total || 0),
+      vacantRooms: rooms[0].total || 0
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
